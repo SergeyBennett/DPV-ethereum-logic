@@ -1,17 +1,17 @@
-pragma solidity ^0.4.17;
+pragma solidity ^0.4.18;
 
 import "Owned.sol";
+
 
 /**
  * @title Pausable
  * @dev Base contract which allows children to implement an emergency stop mechanism.
  */
 contract Pausable is Owned {
-    event Pause();
-    event Unpause();
+    event Paused();
+    event Unpaused();
 
     bool public paused = false;
-
 
     /**
      * @dev modifier to allow actions only when the contract IS paused
@@ -32,18 +32,18 @@ contract Pausable is Owned {
     /**
      * @dev called by the owner to pause, triggers stopped state
      */
-    function pause() onlyOwner whenNotPaused returns (bool) {
+    function pause() public onlyOwner whenNotPaused returns (bool) {
         paused = true;
-        Pause();
+        emit Paused();
         return true;
     }
 
     /**
      * @dev called by the owner to unpause, returns to normal state
      */
-    function unpause() onlyOwner whenPaused returns (bool) {
+    function unpause() public onlyOwner whenPaused returns (bool) {
         paused = false;
-        Unpause();
+        emit Unpaused();
         return true;
     }
 }

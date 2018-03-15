@@ -1,6 +1,6 @@
-pragma solidity ^0.4.17;
+pragma solidity ^0.4.18;
 
-import "Owned.sol";
+import "./Owned.sol";
 
 contract Mortal is Owned {
     // This contract inherits the `onlyOwner` modifier from
