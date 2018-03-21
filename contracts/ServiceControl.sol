@@ -1,9 +1,9 @@
-pragma solidity ^0.4.19;
+pragma solidity ^0.4.18;
 
 import "./Auxiliary/Pausable.sol";
 
 
-contract ServiceControl is Pausable {
+contract ServiceControl {
 
     address public ceoAddress;
     address public cfoAddress;
@@ -22,7 +22,7 @@ contract ServiceControl is Pausable {
 
     modifier onlyCLevel() {
         require(
-            msg.sender == cooAddress||msg.sender == ceoAddress||msg.sender == cfoAddress
+            msg.sender == ceoAddress||msg.sender == cfoAddress
         );
         _;
     }
