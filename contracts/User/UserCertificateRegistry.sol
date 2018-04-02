@@ -1,31 +1,29 @@
-pragma solidity ^0.4.18;
+pragma solidity 0.4.21;
 
 import "../Auxiliary/Mortal.sol";
 
+
 contract UserCertificateRegistry is Owned {
 
-
-
-    mapping (address => string) issuerToHash;
-    mapping (address => bool) trustedAddresses;
-    mapping (address => mapping (string => string)) issuerToCertificates;
-
-
-
+    mapping (address => string) private issuerToHash;
+    mapping (address => bool) private trustedAddresses;
+    mapping (address => mapping (string => string)) private issuerToCertificates;
 
     function UserCertificateRegistry() public {
-        trustAddress (owner);
+
+        addToTrusted(owner);
+
     }
 
-    function createCertificate (string certName, string IpfsHash) external onlyTrusted {
+    function createCertificate (string certName, string ipfsHash) external onlyTrusted returns (address) {
         address issuer = msg.sender;
 
         require(bytes(issuerToHash[issuer]).length == 0);
-        issuerToHash[issuer] = IpfsHash;
-        issuerToCertificates[issuer][certName] = IpfsHash;
+        issuerToHash[issuer] = ipfsHash;
+        issuerToCertificates[issuer][certName] = ipfsHash;
     }
 
-    function deleteCertificate (string certName) external onlyTrusted {
+    function deleteCertificate (string certName) external onlyTrusted returns (address) {
         address issuer = msg.sender;
 
         require(bytes(issuerToHash[issuer]).length != 0);
@@ -33,7 +31,7 @@ contract UserCertificateRegistry is Owned {
         issuerToCertificates[issuer][certName] = "";
     }
 
-    function editCertificate (string certName, string newIpfsHash) external {
+    function editCertificate (string certName, string newIpfsHash) external returns (address) {
         address issuer = msg.sender;
 
         require(bytes(issuerToHash[issuer]).length != 0);
@@ -41,30 +39,24 @@ contract UserCertificateRegistry is Owned {
         issuerToCertificates[issuer][certName] = newIpfsHash;
     }
 
-    function existsCertificate (address issuer) view public returns (bool) {
+    function existsCertificate (address issuer) public view returns (bool) {
         return bytes(issuerToHash[issuer]).length != 0;
     }
 
-    function existsCertificate (address issuer, string certName) view public {
+    function existsCertificate (address issuer, string certName) public view {
         bytes(issuerToCertificates[issuer][certName]).length != 0;
     }
 
-
-
-
-
-
-
-
-    function trustAddress (address toTrust) public onlyOwner {
+    function addToTrusted(address toTrust) public onlyOwner returns (address) {
         require(!trustedAddresses[toTrust]);
         trustedAddresses[toTrust] = true;
-
+        return toTrust;
     }
 
-    function unTrustAddress (address toUntrust) public onlyOwner {
+    function removeFromTrusted(address toUntrust) public onlyOwner returns (address) {
         require(trustedAddresses[toUntrust]);
         trustedAddresses[toUntrust] = false;
+        return toUntrust;
     }
 
     modifier onlyTrusted () {
