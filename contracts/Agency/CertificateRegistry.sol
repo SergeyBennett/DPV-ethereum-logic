@@ -7,6 +7,7 @@ contract CertificateRegistry is Owned {
     //TODO Hash compression to bytes32
 
     //mapping (string => address) hashToAddress;
+
     mapping (address => string) addressToHash;
 
     function CertificateRegistry() public {

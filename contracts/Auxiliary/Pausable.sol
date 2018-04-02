@@ -9,7 +9,7 @@ import "./Owned.sol";
  */
 contract Pausable is Owned {
     event Paused();
-    event Unpaused();
+    event UnPaused();
 
     bool public paused = false;
 
@@ -43,7 +43,7 @@ contract Pausable is Owned {
      */
     function unpause() public onlyOwner whenPaused returns (bool) {
         paused = false;
-        emit Unpaused();
+        emit UnPaused();
         return true;
     }
 }
