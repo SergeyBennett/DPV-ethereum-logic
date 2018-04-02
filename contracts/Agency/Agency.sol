@@ -2,6 +2,7 @@ pragma solidity ^0.4.18;
 
 import "./AgencyControl.sol";
 import "./CertificateRegistry.sol";
+import "../User/UserCertificateRegistry.sol";
 
 contract Agency is AgencyControl {
 
@@ -36,27 +37,18 @@ contract Agency is AgencyControl {
 
 
 
-    function createCertificate(address owner) public {
-        require(!existsCertificate(owner));
-        
+    function createCertificate(address owner, string certName, string value) public {
+        UserCertificateRegistry recipient = UserCertificateRegistry(owner);
+        recipient.createCertificate(certName, value);
     }
 
-    function deleteCertificate(address owner) public {
-        
+    function deleteCertificate(address owner, string certName) public {
+        UserCertificateRegistry recipient = UserCertificateRegistry(owner);
+        recipient.deleteCertificate(certName);
     }
 
-    function createCertificate(address owner) public {
-        
-    }
+    // function getCertificateValue(address owner) public {
 
-    function existsCertificate(address owner) public returns (bool){
-
-        //TODO 
-        return true;
-    }
-
-    function getCertificateValue(address owner) public {
-
-    }
+    // }
 
 }

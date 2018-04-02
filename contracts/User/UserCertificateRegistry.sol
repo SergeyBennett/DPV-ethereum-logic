@@ -17,30 +17,36 @@ contract UserCertificateRegistry is Owned {
         trustAddress (owner);
     }
 
-    function createCertificate (address owner,string certName, string IpfsHash) external onlyTrusted {
-        require(bytes(issuerToHash[owner]).length == 0);
-        issuerToHash[owner] = IpfsHash;
-        issuerToCertificates[owner][certName] = IpfsHash;
+    function createCertificate (string certName, string IpfsHash) external onlyTrusted {
+        address issuer = msg.sender;
+
+        require(bytes(issuerToHash[issuer]).length == 0);
+        issuerToHash[issuer] = IpfsHash;
+        issuerToCertificates[issuer][certName] = IpfsHash;
     }
 
-    function deleteCertificate (address owner, string certName) external onlyTrusted {
-        require(bytes(issuerToHash[owner]).length != 0);
-        issuerToHash[owner] = "";
-        issuerToCertificates[owner][certName] = "";
+    function deleteCertificate (string certName) external onlyTrusted {
+        address issuer = msg.sender;
+
+        require(bytes(issuerToHash[issuer]).length != 0);
+        issuerToHash[issuer] = "";
+        issuerToCertificates[issuer][certName] = "";
     }
 
-    function editCertificate (address owner, string certName, string newIpfsHash) external {
-        require(bytes(issuerToHash[owner]).length != 0);
-        issuerToHash[owner] = newIpfsHash;
-        issuerToCertificates[owner][certName] = newIpfsHash;
+    function editCertificate (string certName, string newIpfsHash) external {
+        address issuer = msg.sender;
+
+        require(bytes(issuerToHash[issuer]).length != 0);
+        issuerToHash[issuer] = newIpfsHash;
+        issuerToCertificates[issuer][certName] = newIpfsHash;
     }
 
-    function existsCertificate (address owner) public {
-        bytes(issuerToHash[owner]).length != 0;
+    function existsCertificate (address issuer) view public returns (bool) {
+        return bytes(issuerToHash[issuer]).length != 0;
     }
 
-    function existsCertificate (address owner, string certName) public {
-        bytes(issuerToCertificates[owner][certName]).length != 0;
+    function existsCertificate (address issuer, string certName) view public {
+        bytes(issuerToCertificates[issuer][certName]).length != 0;
     }
 
 
