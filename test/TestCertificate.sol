@@ -41,7 +41,7 @@ contract TestUserCertificateRegistry {
         address expected = address(this);
         address result = registry.createCertificate("Test", "New test hash");
 
-        Assert.equal(expected, result, "Certificate from this address should be edited");
+        Assert.equal(expected, result, "Certificate from this address should be deleted");
     }
 
     // Testing the ExistsCertificate() function (should return true)
