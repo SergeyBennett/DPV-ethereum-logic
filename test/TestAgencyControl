@@ -1,0 +1,25 @@
+pragma solidity ^0.4.21;
+
+import "truffle/Assert.sol";
+import "truffle/DeployedAddresses.sol";
+import "../contracts/Agency/AgencyControl.sol";
+
+
+contract TestAgencyControl {
+    
+    AgencyControl control = AgencyControl(DeployedAddresses.AgencyControl());
+
+    address testCEO = address(0xe0F5206BBd039e7b0592d8918820024E2a7437c1);
+    address testCOO = address(0xe0F5206bBd039E7b0592d8918820024E2A7437C2);
+    address testCFO = address(0xE0f5206bbd039e7B0592D8918820024e2a7437c3);
+
+    //Testing setting CEO to new address
+    function testSetCEO() public {
+
+        address expected = testCEO;
+        address result = control.setCEO(testCEO);
+        Assert.equal(expected, result, "This address should be new CEO");
+
+    }
+
+}

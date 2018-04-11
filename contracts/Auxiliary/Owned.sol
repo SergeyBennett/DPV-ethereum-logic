@@ -33,5 +33,5 @@ contract Owned {
             owner = newOwner;
         }
     }
-
+    
 }

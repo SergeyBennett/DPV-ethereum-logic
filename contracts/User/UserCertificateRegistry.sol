@@ -31,7 +31,7 @@ contract UserCertificateRegistry is Owned {
         issuerToCertificates[issuer][certName] = "";
     }
 
-    function editCertificate (string certName, string newIpfsHash) external returns (address) {
+    function editCertificate (string certName, string newIpfsHash) external onlyTrusted returns (address) {
         address issuer = msg.sender;
 
         require(bytes(issuerToHash[issuer]).length != 0);
@@ -45,6 +45,10 @@ contract UserCertificateRegistry is Owned {
 
     function existsCertificate (address issuer, string certName) public view {
         bytes(issuerToCertificates[issuer][certName]).length != 0;
+    }
+
+    function getCertificates (string certName) public view returns(string) {
+        return issuerToCertificates[msg.sender][certName];
     }
 
     function addToTrusted(address toTrust) public onlyOwner returns (address) {

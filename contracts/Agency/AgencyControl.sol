@@ -11,11 +11,10 @@ contract AgencyControl is Pausable, Mortal {
     address public cfoAddress;
     address public cooAddress;
 
-    function AgencyControl(address newCeoAddress, address newCfoAddress, address newCooAddress) public {
-        ceoAddress = newCeoAddress;
-        cfoAddress = newCfoAddress;
-        cooAddress = newCooAddress;
+    function AgencyControl() public {
     }
+
+
 
     /// @dev Access modifier for CEO-only functionality
     modifier onlyCEO() {
@@ -29,6 +28,14 @@ contract AgencyControl is Pausable, Mortal {
         _;
     }
 
+    /// @dev Access modifier for COO-only functionality
+    modifier onlyCOO() {
+        require(msg.sender == cooAddress);
+        _;
+    }
+
+
+    /// @dev Access modifier for C-level-only functionality
     modifier onlyCLevel() {
         require(
             msg.sender == ceoAddress||msg.sender == cfoAddress||msg.sender == cooAddress
@@ -36,12 +43,15 @@ contract AgencyControl is Pausable, Mortal {
         _;
     }
 
+
+
     /// @dev Assigns a new address to act as the CEO. Only available to the current CEO.
     /// @param _newCEO The address of the new CEO
-    function setCEO(address _newCEO) external onlyOwner {
+    function setCEO(address _newCEO) external onlyOwner returns (address) {
         require(_newCEO != address(0));
 
         ceoAddress = _newCEO;
+        return ceoAddress;
     }
 
     /// @dev Assigns a new address to act as the CFO. Only available to the current CEO.
