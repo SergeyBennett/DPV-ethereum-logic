@@ -2,6 +2,7 @@ pragma solidity ^0.4.18;
 
 import "../Auxiliary/Mortal.sol";
 
+
 contract CertificateRegistry is Owned {
 
     //TODO Hash compression to bytes32
@@ -14,9 +15,9 @@ contract CertificateRegistry is Owned {
         
     }
 
-    function createCertificate (address owner, string IpfsHash) external onlyOwner {
+    function createCertificate (address owner, string ipfsHash) external onlyOwner {
         require(bytes(addressToHash[owner]).length == 0);
-        addressToHash[owner] = IpfsHash;
+        addressToHash[owner] = ipfsHash;
     }
 
     function deleteCertificate (address owner) external onlyOwner {
@@ -47,7 +48,6 @@ contract CertificateRegistry is Owned {
     }
 
     */
-    
     function compareStrings (string a, string b) private pure returns (bool) {
         return keccak256(a) == keccak256(b);
     }

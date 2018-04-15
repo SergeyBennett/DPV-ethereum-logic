@@ -1,6 +1,6 @@
 pragma solidity 0.4.21;
 
-import "../Auxiliary/Mortal.sol";
+import "../Auxiliary/Owned.sol";
 
 
 contract UserCertificateRegistry is Owned {

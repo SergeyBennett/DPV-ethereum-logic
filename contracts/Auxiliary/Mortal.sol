@@ -2,6 +2,7 @@ pragma solidity ^0.4.18;
 
 import "./Owned.sol";
 
+
 contract Mortal is Owned {
     // This contract inherits the `onlyOwner` modifier from
     // `owned` and applies it to the `close` function, which
