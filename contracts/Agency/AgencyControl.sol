@@ -14,8 +14,6 @@ contract AgencyControl is Pausable, Mortal {
     function AgencyControl() public {
     }
 
-
-
     /// @dev Access modifier for CEO-only functionality
     modifier onlyCEO() {
         require(msg.sender == ceoAddress);
@@ -37,9 +35,7 @@ contract AgencyControl is Pausable, Mortal {
 
     /// @dev Access modifier for C-level-only functionality
     modifier onlyCLevel() {
-        require(
-            msg.sender == ceoAddress||msg.sender == cfoAddress||msg.sender == cooAddress
-        );
+        require(msg.sender == ceoAddress||msg.sender == cfoAddress||msg.sender == cooAddress);
         _;
     }
 
@@ -49,7 +45,6 @@ contract AgencyControl is Pausable, Mortal {
     /// @param _newCEO The address of the new CEO
     function setCEO(address _newCEO) external onlyOwner returns (address) {
         require(_newCEO != address(0));
-
         ceoAddress = _newCEO;
         return ceoAddress;
     }

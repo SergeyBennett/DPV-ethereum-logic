@@ -1,6 +1,6 @@
 pragma solidity ^0.4.18;
-
 import "../Auxiliary/Mortal.sol";
+
 
 contract CertificateRegistry is Owned {
 
@@ -47,8 +47,8 @@ contract CertificateRegistry is Owned {
     }
 
     */
-    
     function compareStrings (string a, string b) private pure returns (bool) {
         return keccak256(a) == keccak256(b);
     }
+
 }

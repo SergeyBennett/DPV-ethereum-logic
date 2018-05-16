@@ -4,44 +4,44 @@ import "./AgencyControl.sol";
 import "./CertificateRegistry.sol";
 import "../User/UserCertificateRegistry.sol";
 
+
 contract Agency is AgencyControl {
 
-    string public Name;
+    string public name;
 
-    mapping(address => bool) private Agents;
+    mapping(address => bool) private agents;
 
     CertificateRegistry[] registries;
 
     function Agency (string name) public {
-        Name = name;
+        name = name;
     }
 
     function addAgent(address newAgent) external onlyCEO {
-        require(!Agents[newAgent]);
-        Agents[newAgent] = true;
+        require(!agents[newAgent]);
+        agents[newAgent] = true;
     }
 
     function deleteAgent(address agent) external onlyCEO {
-        require(Agents[agent]);
-        Agents[agent] = true;
+        require(agents[agent]);
+        agents[agent] = true;
     }
 
     function existsAgent(address agent) external view onlyCLevel returns (bool) {
-        return Agents[agent];
+        return agents[agent];
     }
 
     modifier onlyAgent() {
-        require(Agents[msg.sender]);
+        require(agents[msg.sender]);
         _;
     }
 
-
-
-    function createCertificate(address owner, string certName, string value) public {
+    function createCertificate(address owner, string value) public {
         UserCertificateRegistry recipient = UserCertificateRegistry(owner);
-        recipient.createCertificate(certName, value);
+        recipient.createCertificate(value);
+        //recipient.createCertificate(certName, value);
     }
-
+    
     function deleteCertificate(address owner, string certName) public {
         UserCertificateRegistry recipient = UserCertificateRegistry(owner);
         recipient.deleteCertificate(certName);

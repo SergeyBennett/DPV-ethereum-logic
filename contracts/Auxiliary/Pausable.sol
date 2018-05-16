@@ -1,4 +1,4 @@
-pragma solidity ^0.4.21;
+pragma solidity 0.4.21;
 
 import "./Owned.sol";
 
@@ -39,9 +39,9 @@ contract Pausable is Owned {
     }
 
     /**
-     * @dev called by the owner to unpause, returns to normal state
+     * @dev called by the owner to unPause, returns to normal state
      */
-    function unpause() public onlyOwner whenPaused returns (bool) {
+    function unPause() public onlyOwner whenPaused returns (bool) {
         paused = false;
         emit UnPaused();
         return true;
