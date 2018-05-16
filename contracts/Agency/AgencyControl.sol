@@ -1,4 +1,4 @@
-pragma solidity ^0.4.18;
+pragma solidity ^0.4.21;
 
 import "../Auxiliary/Pausable.sol";
 import "../Auxiliary/Mortal.sol";
@@ -32,14 +32,11 @@ contract AgencyControl is Pausable, Mortal {
         _;
     }
 
-
     /// @dev Access modifier for C-level-only functionality
     modifier onlyCLevel() {
         require(msg.sender == ceoAddress||msg.sender == cfoAddress||msg.sender == cooAddress);
         _;
     }
-
-
 
     /// @dev Assigns a new address to act as the CEO. Only available to the current CEO.
     /// @param _newCEO The address of the new CEO

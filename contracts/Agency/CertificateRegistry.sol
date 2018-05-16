@@ -14,9 +14,9 @@ contract CertificateRegistry is Owned {
         
     }
 
-    function createCertificate (address owner, string IpfsHash) external onlyOwner {
+    function createCertificate (address owner, string ipfsHash) external onlyOwner {
         require(bytes(addressToHash[owner]).length == 0);
-        addressToHash[owner] = IpfsHash;
+        addressToHash[owner] = ipfsHash;
     }
 
     function deleteCertificate (address owner) external onlyOwner {
